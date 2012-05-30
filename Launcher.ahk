@@ -100,7 +100,7 @@ SetPort:
 return
 
 Add:
-    FileSelectFile, selectedfiles, M3, ,Select File, Doom Files (*.wad; *.pk3; *.deh; *.cfg; *.dsg; *.zds; *.lmp; *.ini)
+    FileSelectFile, selectedfiles, M3, ,Select File, Doom Files (*.wad; *.pk3; *.pk7; *.deh; *.cfg; *.dsg; *.zds; *.lmp; *.ini)
     if selectedfiles =
 	return
     path := ""
