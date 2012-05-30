@@ -15,7 +15,7 @@ Only Launcher.exe is needed to run.
 Here's a Brief Guide To Doing Doom Stuff:
 
 One Time Setup:
-1. Get my launcher QLZ from the OP. Stick the exe in your gzdoom directory.
+1. Download QLZ from https://bitbucket.org/SavageMessiah/qlz/downloads/Launcher.exe. Stick the exe in your gzdoom directory.
 2. Copy your doom.wad, doom2.wad, etc from wherever they are now into the gzdoom directory.
 3. Run launcher.exe
 4. Select gzdoom.exe for the gzdoom location (it's not obvious at all but it also supports chocolate doom and prboom+)
