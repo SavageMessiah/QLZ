@@ -74,7 +74,7 @@ LoadSettings()
 if( Pos = "" ) {
     Pos := "Center"
 }
-Gui, Show, W350 H480 %Pos%, %Title%
+Gui, Show, AutoSize %Pos%, %Title%
 return
 
 Show:
