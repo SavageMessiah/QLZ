@@ -1,8 +1,8 @@
 #SingleInstance
 INI_FILENAME = launcher.ini
-IWAD_FILES = doom1.wad|doom.wad|doom2.wad|tnt.wad|plutonia.wad|heretic.wad|hexen.wad|strife1.wad|strife.wad
+IWAD_FILES = doom1.wad|doom.wad|doomu.wad|bfgdoom.wad|doombfg.wad|doom2.wad|bfgdoom2.wad|doom2bfg.wad|freedoom.wad|tnt.wad|plutonia.wad|heretic1.wad|heretic.wad|hexen.wad|strife0.wad|strife1.wad|chex.wad|chex3.wad|action2.wad|harm1.wad|hacx.wad|hacx2.wad
 
-Title = Quickly Launchering GZDoom
+Title = Quickly Launchering GZDoom v1.1
 
 Cmd := ""
 Files := ""
