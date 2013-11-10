@@ -2,7 +2,7 @@
 INI_FILENAME = launcher.ini
 IWAD_FILES = doom1.wad|doom.wad|doomu.wad|bfgdoom.wad|doombfg.wad|doom2.wad|bfgdoom2.wad|doom2bfg.wad|freedoom.wad|tnt.wad|plutonia.wad|heretic1.wad|heretic.wad|hexen.wad|strife0.wad|strife1.wad|chex.wad|chex3.wad|action2.wad|harm1.wad|hacx.wad|hacx2.wad
 
-Title = Quickly Launchering GZDoom v1.1
+Title = Quickly Launchering GZDoom v1.2
 
 Cmd := ""
 Files := ""
@@ -259,7 +259,7 @@ Chocolate() {
 
 SkullTag() {
     global Port
-    return RegExMatch( Port, "i)skulltag" ) > 0
+    return RegExMatch( Port, "i)skulltag|zandronum" ) > 0
 }
 
 Validate() {
@@ -323,7 +323,7 @@ Help:
     if( Chocolate() )
         Run, http://www.chocolate-doom.org/wiki/index.php/Command_line_arguments 
     else if( Skulltag() )
-        Run, http://skulltag.com/wiki/Commands
+        Run, http://wiki.zandronum.com/Main_Page
     else
         Run, http://zdoom.org/wiki/Command_line_parameters
 return
