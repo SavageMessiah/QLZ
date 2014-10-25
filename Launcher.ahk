@@ -274,11 +274,11 @@ Validate() {
     Gui, Submit, NoHide
     global Port, IwadDir, Iwad
     if( StrLen(Port) == 0 ) {
-        MsgBox, You need to specify a port, fool!
+        MsgBox, You need to specify a port!
         return 0
     }
     if( StrLen(IwadDir) == 0 || StrLen(Iwad) == 0 ) {
-        MsgBox, You need to specify an Iwad dir and an Iwad! Are you stupid or something?
+        MsgBox, You need to specify an Iwad dir and an Iwad!
         return 0
     }
     return 1
