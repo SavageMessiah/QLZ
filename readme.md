@@ -1,21 +1,23 @@
 ## It's a Doom launcher!
 ### Supported Ports
 
-Most sane ports should work fine, but I've only really tried the following
-* (G)zdoom
-* chocolate doom
-* prboom+
-* zandronum (for most things)
+Most sane ports should work fine, but I've only really tried the following [ports.
+
++ (G)zdoom
++ chocolate doom
++ prboom+
++ zandronum (for most things)
 
 ### Supported file types
-These are the file types that the launcher knows the appropriate command line parameter for
-* wad, pk3
-* zdoom savegames (zds)
-* chocolate doom savegames (dsg)
-* ini files
-* cfg files (-config in chocolate, +exec in zdoom/zandronum)
-* demo lumps
-* deh files
+These are the file types that the launcher knows the appropriate command line parameter for.
+
++ wad, pk3
++ zdoom savegames (zds)
++ chocolate doom savegames (dsg)
++ ini files
++ cfg files (-config in chocolate, +exec in zdoom/zandronum)
++ demo lumps
++ deh files
 
 Sorry, no support for loading directories in zdoom yet. I need to add that.
 
