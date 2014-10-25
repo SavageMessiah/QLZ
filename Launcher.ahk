@@ -2,7 +2,7 @@
 INI_FILENAME = launcher.ini
 IWAD_FILES = doom1.wad|doom.wad|doomu.wad|bfgdoom.wad|doombfg.wad|doom2.wad|bfgdoom2.wad|doom2bfg.wad|freedoom.wad|tnt.wad|plutonia.wad|heretic1.wad|heretic.wad|hexen.wad|strife0.wad|strife1.wad|chex.wad|chex3.wad|action2.wad|harm1.wad|hacx.wad|hacx2.wad
 
-Title = Quickly Launchering GZDoom v1.3
+Title = Quickly Launchering Doom v1.3
 
 Cmd := ""
 Files := ""
@@ -25,7 +25,7 @@ Loop, 4 {
 	levels = E%episode%M%A_Index%|%levels%
 }
 
-Gui, Add, Text, Section, (G)Zdoom Location
+Gui, Add, Text, Section, Port Location
 Gui, Add, Text, , IWAD Directory
 Gui, Add, Text, , IWAD
 Gui, Add, ComboBox, w200 Section YS vPort
