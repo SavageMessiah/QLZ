@@ -270,6 +270,16 @@ SkullTag() {
     return RegExMatch( Port, "i)skulltag|zandronum" ) > 0
 }
 
+PrBoom() {
+    global Port
+    return RegExMatch( Port, "i)boom-plus" ) > 0
+}
+
+ZDoom() {
+    global Port
+    return RegExMatch( Port, "i)zdoom" ) > 0
+}
+
 Validate() {
     Gui, Submit, NoHide
     global Port, IwadDir, Iwad
@@ -328,12 +338,14 @@ return
 
 Help:
     Gui, Submit, NoHide
-    if( Chocolate() )
+    if( Chocolate() && !PrBoom() )
         Run, http://www.chocolate-doom.org/wiki/index.php/Command_line_arguments 
     else if( Skulltag() )
-        Run, http://wiki.zandronum.com/Main_Page
-    else
+        Run, http://wiki.zandronum.com/Command_Line_Parameters
+    else if( Zdoom() )
         Run, http://zdoom.org/wiki/Command_line_parameters
+    else
+        Run, http://doomwiki.org/wiki/Source_port_parameters
 return
 
 ChangeMode:
