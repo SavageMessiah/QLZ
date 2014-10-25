@@ -2,7 +2,7 @@
 INI_FILENAME = launcher.ini
 IWAD_FILES = doom1.wad|doom.wad|doomu.wad|bfgdoom.wad|doombfg.wad|doom2.wad|bfgdoom2.wad|doom2bfg.wad|freedoom.wad|tnt.wad|plutonia.wad|heretic1.wad|heretic.wad|hexen.wad|strife0.wad|strife1.wad|chex.wad|chex3.wad|action2.wad|harm1.wad|hacx.wad|hacx2.wad
 
-Title = Quickly Launchering GZDoom v1.2
+Title = Quickly Launchering GZDoom v1.3
 
 Cmd := ""
 Files := ""
@@ -197,6 +197,8 @@ MakeCmd:
     Gui, Submit, NoHide
     cmd = "%Port%" -iwad
     cmd = %cmd% "%IwadDir%\%Iwad%"
+    cmd = %cmd% %Options%
+    wads := ""
     Loop, Parse, Files, |
         if( RegexMatch(A_LoopField, "i)deh$") ) {
             cmd = %cmd% -deh "%A_LoopField%"
@@ -214,7 +216,7 @@ MakeCmd:
         } else if( RegexMatch(A_LoopField, "i)lmp$") ) {
             cmd = %cmd% -playdemo "%A_LoopField%"
         } else if( A_LoopField != "" ) {
-                cmd = %cmd% -file "%A_LoopField%"
+                wads = %wads%|%A_LoopField%
         }
     if( Mode = "Client" ) {
         If( Chocolate() )
@@ -249,7 +251,13 @@ MakeCmd:
         if( Skill != "6" )
             cmd = %cmd% -skill %Skill%
     }
-    cmd = %cmd% %Options%
+    if( wads != "") {
+        cmd = %cmd% -file 
+        Loop, Parse, wads, |
+            if( A_LoopField != "") {
+                cmd = %cmd% "%A_LoopField%"
+            }
+    }
 return
 
 Chocolate() {
