@@ -114,7 +114,7 @@ return
 
 GuiDropFiles:
     Loop, parse, A_GuiEvent, `n
-        if( RegExMatch( A_LoopField, "i)(wad|pk3|deh|cfg|dsg|zds|lmp|ini)$") > 0)
+        if( RegExMatch( A_LoopField, "i)(wad|pk3|pk7|deh|cfg|dsg|zds|lmp|ini)$") > 0)
             Files = %A_LoopField%|%Files%
     GuiControl, , FileDisplay, |%Files%
 return
