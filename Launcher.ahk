@@ -1,8 +1,8 @@
 #SingleInstance
 INI_FILENAME = launcher.ini
-IWAD_FILES = doom1.wad|doom.wad|doomu.wad|bfgdoom.wad|doombfg.wad|doom2.wad|bfgdoom2.wad|doom2bfg.wad|freedoom.wad|tnt.wad|plutonia.wad|heretic1.wad|heretic.wad|hexen.wad|strife0.wad|strife1.wad|chex.wad|chex3.wad|action2.wad|harm1.wad|hacx.wad|hacx2.wad
+IWAD_FILES = doom1.wad|doom.wad|doomu.wad|bfgdoom.wad|doombfg.wad|doom2.wad|bfgdoom2.wad|doom2bfg.wad|freedoom.wad|tnt.wad|plutonia.wad|heretic1.wad|heretic.wad|hexen.wad|strife.wad|strife0.wad|strife1.wad|sve.wad|chex.wad|chex3.wad|action2.wad|harm1.wad|hacx.wad|hacx2.wad|square1.pk3
 
-Title = Quickly Launchering Doom v1.3
+Title = Quickly Launchering Doom v1.4
 
 Cmd := ""
 Files := ""
