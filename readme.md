@@ -4,7 +4,7 @@
 Most sane ports should work fine, but I've only really tried the following [ports.
 
 + (G)zdoom
-+ chocolate doom
++ chocolate doom / crispy doom
 + prboom+
 + zandronum (for most things)
 

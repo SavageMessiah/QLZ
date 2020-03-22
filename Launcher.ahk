@@ -262,7 +262,7 @@ return
 
 Chocolate() {
     global Port
-    return RegExMatch( Port, "i)(chocolate-doom|boom-plus)" ) > 0
+    return RegExMatch( Port, "i)(chocolate-doom|boom-plus|crispy)" ) > 0
 }
 
 SkullTag() {
