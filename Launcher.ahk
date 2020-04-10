@@ -2,7 +2,7 @@
 INI_FILENAME = launcher.ini
 IWAD_FILES = doom1.wad|doom.wad|doomu.wad|bfgdoom.wad|doombfg.wad|doom2.wad|bfgdoom2.wad|doom2bfg.wad|freedoom.wad|freedoom1.wad|freedoom2.wad|freedoomu.wad|freedm.wad|delaweare.wad|tnt.wad|plutonia.wad|heretic1.wad|heretic.wad|hexen.wad|strife.wad|strife0.wad|strife1.wad|sve.wad|chex.wad|chex3.wad|action2.wad|harm1.wad|hacx.wad|hacx2.wad|rotwb.wad|blasphem.wad|blasphemer.wad|square1.pk3|square.pk3|doom_complete.pk3
 
-Title = Quickly Launchering Doom v1.6
+Title = Quickly Launchering Doom v1.7
 
 Cmd := ""
 Files := ""
@@ -228,8 +228,8 @@ MakeCmd:
     } else {
         if( Level != "" ) {
             if( Chocolate() ) {
-                Level := RegExReplace(Level,"i)[A-Z]"," ")
-                cmd = %cmd% -warp %Level%
+                chocolevel := RegExReplace(Level,"i)[A-Z]"," ")
+                cmd = %cmd% -warp %chocolevel%
             } else
                 cmd = %cmd% +map %Level%
         }
