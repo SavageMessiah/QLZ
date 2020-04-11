@@ -1,4 +1,11 @@
 ## It's a Doom launcher!
+
+![Screenshot](screenshot.png)
+
+It's main goal is to be very simple and lightweight. You shouldn't need a lot of BS to play some Doom!
+To that end it is a standalone <1MB executable with no dependencies and portable configuration.
+Drop it in a directory and you're done.
+
 ### Supported Ports
 
 Most sane ports should work fine, but I've only really tried the following [ports.
@@ -24,11 +31,24 @@ Sorry, no support for loading directories in zdoom yet. I need to add that.
 ### A Brief Guide To Doing Doom Stuff
 
 #### Example Setup for GZDoom
-1. Download QLZ from https://bitbucket.org/SavageMessiah/qlz/downloads/Launcher.exe. Stick the exe in your gzdoom directory.
+1. Download the latest release from https://github.com/SavageMessiah/QLZ/releases Stick the exe in your gzdoom directory.
 2. Copy your doom.wad, doom2.wad, etc from wherever they are now into the gzdoom directory.
 3. Run launcher.exe
 4. Select gzdoom.exe for the gzdoom location
 5. Select your gzdoom directory as the IWAD directory
+
+#### How I set things up
+If you want to use a bunch of ports and keep a hefty stash of wads around, you might try a scheme like this:
+
+```
+doom
+    ports
+        gzdoom
+        etc
+        Launcher.exe
+    iwads
+    wads
+```
 
 #### To Play Something
 1. Select the IWAD you want from the list
