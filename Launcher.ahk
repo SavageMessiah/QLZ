@@ -2,10 +2,10 @@
 INI_FILENAME = launcher.ini
 IWAD_FILES = doom1.wad|doom.wad|doomu.wad|bfgdoom.wad|doombfg.wad|doom2.wad|bfgdoom2.wad|doom2bfg.wad|freedoom.wad|freedoom1.wad|freedoom2.wad|freedoomu.wad|freedm.wad|delaweare.wad|tnt.wad|plutonia.wad|heretic1.wad|heretic.wad|hexen.wad|strife.wad|strife0.wad|strife1.wad|sve.wad|chex.wad|chex3.wad|action2.wad|harm1.wad|hacx.wad|hacx2.wad|rotwb.wad|blasphem.wad|blasphemer.wad|square1.pk3|square.pk3|doom_complete.pk3
 
-Title = Quickly Launchering Doom v1.7
+Title = Quickly Launchering Doom v1.8
 
 Cmd := ""
-Files := ""
+Files := []
 Levels := ""
 Pos := ""
 Profiles := ""
@@ -34,7 +34,7 @@ Gui, Add, DropDownList, XS vIwad W100
 Gui, Add, Button, YS Center Section gSetPort, ...
 Gui, Add, Button, XS Center gSetDir, ...
 Gui, Add, Text, XM Section, Additional Files
-Gui, Add, ListBox, R10 W330 Multi vFileDisplay HScroll, %filelist%
+Gui, Add, ListBox, R10 W330 Multi AltSubmit vFileDisplay HScroll
 Gui, Add, Button, W75 Center Section gAdd, &Add File
 Gui, Add, Button, W75 YS Center gRemove, &Remove File
 Gui, Add, Button, W35 YS Center gUp, &Up
@@ -108,89 +108,57 @@ Add:
 	if A_Index = 1
 	    path := A_LoopField
 	else
-	    Files = %path%\%A_LoopField%|%Files%
-    GuiControl, , FileDisplay, |%Files%
+	    Files.Push(path . "\" . A_LoopField)
+    GuiControl, , FileDisplay, % FileList()
 return
 
 GuiDropFiles:
     Loop, parse, A_GuiEvent, `n
         if( RegExMatch( A_LoopField, "i)(wad|pk3|pk7|deh|cfg|dsg|zds|lmp|ini)$") > 0)
-            Files = %A_LoopField%|%Files%
-    GuiControl, , FileDisplay, |%Files%
+            Files.Push(A_LoopField)
+    GuiControl, , FileDisplay, % FileList()
 return
 
 Clear:
-    GuiControl, , FileDisplay,|
-    Files := ""
+    Files := []
+    GuiControl, , FileDisplay, % FileList()
 return
 
 Remove:
     Gui, Submit, NoHide
-    Loop, Parse, FileDisplay, |
-	StringReplace, Files, Files, %A_LoopField%|
-    GuiControl, ,FileDisplay, |%Files%
+    remove := StrSplit(FileDisplay, "|")
+    removed := 0
+    for i, r in remove {
+        Files.RemoveAt(r - removed)
+        removed++
+    }
+    GuiControl, ,FileDisplay, % FileList()
 return
 
 Up:
     Gui, Submit, NoHide
-    StringSplit, selected, FileDisplay, |
-    if( selected0 != 1 ) {
+    split := StrSplit(FileDisplay, "|")
+    if( split.Length() != 1 ) {
         Msgbox, Please select one file.
         return
     }
+    pos := Shift(Files, split[1], -1)
 
-    StringSplit, farray, Files, |
-    if( farray0 < 2 )
-        return
-    Loop, %farray0%
-        if( farray%A_Index% = selected1 ) {
-            if( A_Index = 1 )
-                return
-            field := A_Index - 1
-            temp := farray%field%
-            farray%field% := selected1
-            farray%A_Index% := temp
-            Break
-        }
-
-    Files := ""
-    Loop, %farray0%
-        if( farray%A_Index% != "" )
-            Files := Files . farray%A_Index% . "|"
-
-    GuiControl, , FileDisplay, |%Files%
-    GuiControl, ChooseString, FileDisplay, %selected1%
+    GuiControl, , FileDisplay, % FileList()
+    GuiControl, Choose, FileDisplay, % pos
 return
 
 Down:
     Gui, Submit, NoHide
-    StringSplit, selected, FileDisplay, |
-    if( selected0 != 1 ) {
+    split := StrSplit(FileDisplay, "|")
+    if( split.Length() != 1 ) {
         Msgbox, Please select one file.
         return
     }
+    pos := Shift(Files, split[1], 1)
 
-    StringSplit, farray, Files, |
-    if( farray0 < 2 )
-        return
-    Loop, %farray0%
-        if( farray%A_Index% = selected1 ) {
-            if( A_Index = farray0 - 1 )
-                return
-            field := A_Index + 1
-            temp := farray%field%
-            farray%field% := selected1
-            farray%A_Index% := temp
-            Break
-        }
-
-    Files := ""
-    Loop, %farray0%
-        if( farray%A_Index% != "" )
-            Files := Files . farray%A_Index% . "|"
-
-    GuiControl, , FileDisplay, |%Files%
-    GuiControl, ChooseString, FileDisplay, %selected1%
+    GuiControl, , FileDisplay, % FileList()
+    GuiControl, Choose, FileDisplay, % pos
 return
 
 MakeCmd:
@@ -198,26 +166,27 @@ MakeCmd:
     cmd = "%Port%" -iwad
     cmd = %cmd% "%IwadDir%\%Iwad%"
     cmd = %cmd% %Options%
-    wads := ""
-    Loop, Parse, Files, |
-        if( RegexMatch(A_LoopField, "i)deh$") ) {
-            cmd = %cmd% -deh "%A_LoopField%"
-        } else if( RegexMatch(A_LoopField, "i)cfg$") ) {
+    wads := []
+    for i, file in Files {
+        if( RegexMatch(file, "i)deh$") ) {
+            cmd = %cmd% -deh "%file%"
+        } else if( RegexMatch(file, "i)cfg$") ) {
             if( Chocolate() )
-                cmd = %cmd% -config "%A_LoopField%"
+                cmd = %cmd% -config "%file%"
             else
-                cmd = %cmd% +exec "%A_LoopField%"
-        } else if( RegexMatch(A_LoopField, "i)ini$") && !Chocolate() ) {
-            cmd = %cmd% -config "%A_LoopField%"
-        } else if( RegexMatch(A_LoopField, "i)dsg$") && Chocolate() ) {
-            cmd = %cmd% -loadgame "%A_LoopField%"
-        } else if( RegexMatch(A_LoopField, "i)zds$") && !Chocolate() ) {
-            cmd = %cmd% -loadgame "%A_LoopField%"
-        } else if( RegexMatch(A_LoopField, "i)lmp$") ) {
-            cmd = %cmd% -playdemo "%A_LoopField%"
-        } else if( A_LoopField != "" ) {
-                wads = %wads%|%A_LoopField%
+                cmd = %cmd% +exec "%file%"
+        } else if( RegexMatch(file, "i)ini$") && !Chocolate() ) {
+            cmd = %cmd% -config "%file%"
+        } else if( RegexMatch(file, "i)dsg$") && Chocolate() ) {
+            cmd = %cmd% -loadgame "%file%"
+        } else if( RegexMatch(file, "i)zds$") && !Chocolate() ) {
+            cmd = %cmd% -loadgame "%file%"
+        } else if( RegexMatch(file, "i)lmp$") ) {
+            cmd = %cmd% -playdemo "%file%"
+        } else if( file != "" ) {
+            wads.Push(file)
         }
+    }
     if( Mode = "Client" ) {
         If( Chocolate() )
             cmd = %cmd% -connect %IP%
@@ -251,14 +220,36 @@ MakeCmd:
         if( Skill != "6" )
             cmd = %cmd% -skill %Skill%
     }
-    if( wads != "") {
+    if( wads.Length() != 0 ) {
         cmd = %cmd% -file 
-        Loop, Parse, wads, |
-            if( A_LoopField != "") {
-                cmd = %cmd% "%A_LoopField%"
+        for i, wad in wads {
+            if( wad != "" ) {
+                cmd = %cmd% "%wad%"
             }
+        }
     }
 return
+
+FileList() {
+  global Files
+  list := "|"
+  for idx, file in Files {
+    list .= file "|"
+  }
+  return list
+}
+
+Shift(array, idx, offset) {
+    new := idx + offset
+    if( new < array.MinIndex() || new > array.MaxIndex() ) {
+        return idx
+    }
+
+    old := array[new]
+    array[new] := array[idx]
+    array[idx] := old
+    return new
+}
 
 Chocolate() {
     global Port
@@ -374,7 +365,7 @@ SaveSettings(profile="Default") {
         }
     }
     Save("iwad",Iwad,profile)
-    Save("files",Files,profile)
+    Save("files",FileList(),profile)
     Save("level",Level,profile)
     Save("cheats",Cheats,profile)
     Save("respawn",ItemRespawn,profile)
@@ -397,8 +388,15 @@ LoadSettings(profile="Default") {
     global INI_FILENAME, Pos, Profiles, Files, Ports
     ifExist %INI_FILENAME%
     {
-        Files := Load("files",profile)
-        GuiControl, Text, FileDisplay, |%Files%
+        grossfiles := StrSplit(Load("files",profile), "|")
+        ;remove empty items resulting from storing the | list
+        Files := []
+        for i, file in grossfiles {
+            if( file != "" ) {
+                Files.Push(file)
+            }
+        }
+        GuiControl, Text, FileDisplay, % FileList()
         GuiControl, Text, Level, % Load("level",profile)
         GuiControl, , Cheats, % Load("cheats",profile)
         GuiControl, , ItemRespawn, % Load("respawn",profile)
